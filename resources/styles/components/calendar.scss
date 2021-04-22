@@ -1,0 +1,24 @@
+.c-calendar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  border-top: 1px #000000 solid;
+
+  width: 100%;
+
+  .is-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    &:first-child {
+      border-left: 1px #000000 solid;
+    }
+    border-right: 1px #000000 solid;
+
+    .is-row {
+      min-height: 15px;
+      border-bottom: 1px #000000 solid;
+    }
+  }
+}

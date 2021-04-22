@@ -1,0 +1,35 @@
+aside {
+  @media (min-width: $breakpoint_mobile) {
+    flex-grow: 1;
+    min-width: 150px;
+    max-width: 200px;
+  }
+
+  nav {
+    padding: $space_base;
+
+    ul {
+      list-style: disc inside;
+
+      margin: $space_three_quarter 0 $space_three_quarter $space_half;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      li {
+        padding: $space_tenth;
+
+        a {
+          position: relative;
+          left: -$space_three_quarter;
+        }
+      }
+    }
+  }
+
+}

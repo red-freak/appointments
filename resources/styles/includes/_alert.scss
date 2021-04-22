@@ -1,0 +1,24 @@
+.alert {
+  width: 100%;
+  font-weight: 700;
+  padding: $space_half;
+  margin: $space_base;
+  border: 1px #CCCCCC solid;
+  border-radius: $space_half;
+
+  &-error {
+    background-color: #ffd5d5;
+  }
+
+  &-warn {
+    background-color: #fff6d5;
+  }
+
+  &-success {
+    background-color: #ebffd5;
+  }
+
+  &-small {
+    font-size: 75%;
+  }
+}

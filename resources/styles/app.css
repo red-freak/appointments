@@ -1,0 +1,131 @@
+body {
+  display: flex; }
+
+.side-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #fce2e2;
+  width: 95vw;
+  height: 95vh;
+  margin: 2.5vh auto; }
+
+.content-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column; }
+  @media screen and (min-width: 700px) {
+    .content-wrapper {
+      flex-direction: row; } }
+
+.alert {
+  width: 100%;
+  font-weight: 700;
+  padding: 6px;
+  margin: 12px;
+  border: 1px #CCCCCC solid;
+  border-radius: 6px; }
+  .alert-error {
+    background-color: #ffd5d5; }
+  .alert-warn {
+    background-color: #fff6d5; }
+  .alert-success {
+    background-color: #ebffd5; }
+  .alert-small {
+    font-size: 75%; }
+
+header {
+  padding: 12px;
+  background-color: #750000;
+  color: #FFFFFF; }
+
+@media (min-width: 700px) {
+  aside {
+    flex-grow: 1;
+    min-width: 150px;
+    max-width: 200px; } }
+aside nav {
+  padding: 12px; }
+  aside nav ul {
+    list-style: disc inside;
+    margin: 9px 0 9px 6px; }
+    aside nav ul:first-child {
+      margin-top: 0; }
+    aside nav ul:last-child {
+      margin-bottom: 0; }
+    aside nav ul li {
+      padding: 1.2px; }
+      aside nav ul li a {
+        position: relative;
+        left: -9px; }
+
+main {
+  flex-grow: 1;
+  background-color: #fffbfb;
+  padding: 12px; }
+  main h1 {
+    margin-bottom: 12px; }
+  main p {
+    margin: 6px 0; }
+    main p:first-child {
+      margin-top: 0; }
+    main p:last-child {
+      margin-bottom: 0; }
+  main h1, main h2, main h3, main h4, main h5 {
+    margin: 6px 0; }
+  main table thead {
+    background-color: black;
+    color: white; }
+    main table thead th {
+      padding: 3px; }
+  main table tbody {
+    background-color: black;
+    color: black; }
+    main table tbody td {
+      background-color: white;
+      border: 1px solid black;
+      padding: 3px; }
+      main table tbody td.headline {
+        border: 1px solid white;
+        font-weight: 700;
+        font-size: 77%;
+        padding: 3px 3px 0 3px; }
+
+.form_row {
+  display: flex;
+  flex-direction: row; }
+.form_cell {
+  margin: 3px; }
+.form button {
+  padding: 3px;
+  margin: 3px; }
+
+footer {
+  padding: 6px;
+  background-color: #750000;
+  color: #FFFFFF;
+  font-size: 75%;
+  text-align: center; }
+
+.c-calendar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  border-top: 1px #000000 solid;
+  width: 100%; }
+  .c-calendar .is-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-right: 1px #000000 solid; }
+    .c-calendar .is-column:first-child {
+      border-left: 1px #000000 solid; }
+    .c-calendar .is-column .is-row {
+      min-height: 15px;
+      border-bottom: 1px #000000 solid; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+
+/*# sourceMappingURL=app.css.map */

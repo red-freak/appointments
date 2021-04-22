@@ -1,0 +1,15 @@
+.form {
+  &_row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &_cell {
+    margin: $space_quarter;
+  }
+
+  button {
+    padding: $space_quarter;
+    margin: $space_quarter;
+  }
+}

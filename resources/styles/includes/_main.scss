@@ -1,0 +1,56 @@
+main {
+  flex-grow: 1;
+  background-color: #fffbfb;
+  padding: $space_base;
+
+  h1 {
+    margin-bottom: $space_base;
+  }
+
+  p {
+    margin: $space_half 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  h1, h2, h3, h4, h5 {
+    margin: $space_half 0;
+  }
+
+  table {
+    thead {
+      background-color: black;
+      color: white;
+
+      th {
+        padding: $space_quarter;
+      }
+    }
+
+    tbody {
+      background-color: black;
+      color: black;
+
+      td {
+        background-color: white;
+        border: 1px solid black;
+        padding: $space_quarter;
+
+        &.headline {
+          border: 1px solid white;
+          font-weight: 700;
+          font-size: 77%;
+          padding: $space_quarter $space_quarter 0 $space_quarter;
+        }
+      }
+    }
+
+
+  }
+}

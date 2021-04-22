@@ -1,0 +1,17 @@
+@import "variables";
+
+@import 'includes/base';
+@import 'includes/alert';
+@import 'includes/header';
+@import 'includes/sidebar';
+@import 'includes/main';
+@import 'includes/form';
+@import 'includes/footer';
+
+@import 'components/calendar';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
