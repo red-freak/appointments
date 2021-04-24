@@ -2,8 +2,6 @@
 
 namespace App;
 
-use SQLite3;
-
 class ViewHandler {
 	private const CMD_EXTENDS = '/@extends\([\'"](.*?)[\'"]\)/im';
 	private const CMD_INCLUDE = '/@include\([\'"](.*?)[\'"]\)/im';
@@ -16,7 +14,9 @@ class ViewHandler {
 	 */
 	public function __construct($name, array $vars = []) {
 		$this->name = $name;
-		$this->vars = $vars;
+
+		$request = RequestHandler::$currentRequest;
+		$this->vars = array_merge($request->all(), $vars);
 	}
 
 	public function render(): string {
@@ -56,6 +56,11 @@ class ViewHandler {
 			self::fileByName($name)
 		]);
 
+		$additionalVars = get_defined_vars();
+		unset($additionalVars['name']);
+
+		$this->vars = array_merge($this->vars, $additionalVars);
+
 		return ob_get_clean();
 	}
 
@@ -79,6 +84,17 @@ class ViewHandler {
 			'views',
 			self::fileByName($extends)
 		]);
+
+		$additionalVars = get_defined_vars();
+		unset(
+			$additionalVars['content'],
+			$additionalVars['matches'],
+			$additionalVars['value'],
+			$additionalVars['name'],
+			$additionalVars['extends']
+		);
+
+		$this->vars = array_merge($this->vars, $additionalVars);
 
 		return ob_get_clean();
 	}

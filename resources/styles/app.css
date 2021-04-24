@@ -108,20 +108,37 @@ footer {
 
 .c-calendar {
   box-sizing: border-box;
-  display: flex;
   flex-direction: row;
   border-top: 1px #000000 solid;
+  border-collapse: collapse;
+  font-size: 77%;
   width: 100%; }
   .c-calendar .is-column {
-    display: flex;
     flex-direction: column;
     flex-grow: 1;
-    border-right: 1px #000000 solid; }
+    border-right: 1px #000000 solid;
+    border-bottom: 1px #000000 solid; }
     .c-calendar .is-column:first-child {
       border-left: 1px #000000 solid; }
-    .c-calendar .is-column .is-row {
+    .c-calendar .is-column .is-item {
       min-height: 15px;
-      border-bottom: 1px #000000 solid; }
+      border: 1px #ababab26 solid; }
+    .c-calendar .is-column .is-slot {
+      background-color: #ebffd5; }
+    .c-calendar .is-column .is-booked {
+      background-color: #fce2e2; }
+  .c-calendar.is-week th, .c-calendar.is-week td {
+    width: 12.5%; }
+  .c-calendar-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 65%; }
+    .c-calendar-selector__group {
+      display: flex;
+      flex-direction: row; }
+    .c-calendar-selector__item {
+      padding: 3px; }
 
 * {
   box-sizing: border-box;

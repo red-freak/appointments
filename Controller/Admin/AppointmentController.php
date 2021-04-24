@@ -6,6 +6,7 @@ use App\RequestHandler;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use Exception;
 use SQLite3Stmt;
 
 class AppointmentController {
@@ -34,9 +35,18 @@ class AppointmentController {
 	}
 
 	public function index(RequestHandler $request, $errors = []) {
+		$from = $request->get('from', mktime(0, 0, 0, date("n"), date("j") - date("N") + 1));
+
+		$appointments_tmp = $this->appointments($request, $from);
+		$appointments = [];
+		foreach ($appointments_tmp as $appointment) {
+			$appointments[$appointment['from']] = $appointment;
+		}
+
 		return $request->view('appointments.index')
-		               ->with('appointments', $this->appointments($request))
+		               ->with('appointments', $appointments)
 		               ->with('attendantsNoSlot', $this->attendantsNoSlot($request))
+		               ->with('from', $from)
 		               ->render();
 	}
 
@@ -97,7 +107,7 @@ class AppointmentController {
 	/**
 	 * @param RequestHandler $request
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	private function getFreeAppointments(RequestHandler $request): array {
 		/** @var SQLite3Stmt $slotRequest */
@@ -130,17 +140,22 @@ class AppointmentController {
 	/**
 	 * @param RequestHandler $request
 	 *
-	 * @throws \Exception
+	 * @return array
+	 *
+	 * @throws Exception
 	 */
-	private function appointments(RequestHandler $request): array {
-		/** @var SQLite3Stmt $appointmentRequest */
-		$appointmentRequest = $request->db()->db()->prepare(
-			'SELECT *
-				   FROM `appointments`
+	private function appointments(RequestHandler $request, ?int $from = null): array {
+		// Erstelle die Query
+		$query = 'SELECT *
+		           FROM `appointments`
 				       LEFT JOIN `attendents` on attendents.id = appointments.attendent_id
-				       LEFT JOIN `interviewers` on appointments.interviewer_id = interviewers.id
-				   ORDER BY `from`;'
-		);
+				       LEFT JOIN `interviewers` on appointments.interviewer_id = interviewers.id';
+		if ($from) $query .= "\n" . 'WHERE `from` >= :from AND `from` <= (:from + 604800)';
+		$query .= "\n" . 'ORDER BY `from`;';
+
+		/** @var SQLite3Stmt $appointmentRequest */
+		$appointmentRequest = $request->db()->db()->prepare($query);
+		$appointmentRequest->bindParam(':from', $from, SQLITE3_INTEGER);
 		$result = $appointmentRequest->execute();
 		$data = [];
 		while ($data[] = $result->fetchArray(SQLITE3_ASSOC));
@@ -153,7 +168,7 @@ class AppointmentController {
 	/**
 	 * @param RequestHandler $request
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	private function attendantsNoSlot(RequestHandler $request): array {
 		/** @var SQLite3Stmt $appointmentRequest */

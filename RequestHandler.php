@@ -12,10 +12,14 @@ abstract class RequestHandler {
 
 	protected $method;
 
+	public static $currentRequest;
+
 	/**
 	 * RequestHandler constructor.
 	 */
 	public function __construct() {
+		self::$currentRequest = $this;
+
 		$this->method = strtoupper($this->get('method', $_SERVER['REQUEST_METHOD']));
 		$this->dbHandler = $this->initDb();
 
@@ -56,5 +60,16 @@ abstract class RequestHandler {
 		if (array_key_exists($name, $_POST)) $value = $_POST[$name];
 
 		return isset($value) && $value ? $value : $default;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function all(): array {
+		$pairs = [];
+		foreach ($_GET as $key => $value) $pairs[$key] = $value;
+		foreach ($_POST as $key => $value) $pairs[$key] = $value;
+
+		return $pairs;
 	}
 }

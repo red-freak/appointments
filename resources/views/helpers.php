@@ -9,8 +9,15 @@ if (!function_exists('style')) {
 }
 
 if (!function_exists('url')) {
-	function url(string $path): string {
+	function url(string $path, array $params = []): string {
+		$queryVars = [];
+		foreach ($params as $key => $value) {
+			$queryVars[] = $key . '=' . $value;
+		}
+		if (count($queryVars) > 0) $path .= '?' . join('&', $queryVars);
+
 		return BASE_URL . $path;
+
 	}
 }
 

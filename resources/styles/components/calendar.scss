@@ -1,13 +1,13 @@
 .c-calendar {
   box-sizing: border-box;
-  display: flex;
   flex-direction: row;
   border-top: 1px #000000 solid;
+  border-collapse: collapse;
+  font-size: 77%;
 
   width: 100%;
 
   .is-column {
-    display: flex;
     flex-direction: column;
     flex-grow: 1;
 
@@ -15,10 +15,39 @@
       border-left: 1px #000000 solid;
     }
     border-right: 1px #000000 solid;
+    border-bottom: 1px #000000 solid;
 
-    .is-row {
+    .is-item {
       min-height: 15px;
-      border-bottom: 1px #000000 solid;
+      border: 1px #ababab26 solid;
+    }
+
+    .is-slot {
+      background-color: #ebffd5;
+    }
+
+    .is-booked {
+      background-color: #fce2e2;
+    }
+  }
+
+  &.is-week {
+    @import 'calendar/week';
+  }
+
+  &-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 65%;
+
+    &__group {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &__item {
+      padding: $space_quarter;
     }
   }
 }
