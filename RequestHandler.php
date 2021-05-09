@@ -20,7 +20,7 @@ abstract class RequestHandler {
 	public function __construct() {
 		self::$currentRequest = $this;
 
-		$this->method = strtoupper($this->get('method', $_SERVER['REQUEST_METHOD']));
+		$this->method = strtoupper($this->get('method', $this->get('_method', $_SERVER['REQUEST_METHOD'])));
 		$this->dbHandler = $this->initDb();
 
 		return $this;
@@ -71,5 +71,10 @@ abstract class RequestHandler {
 		foreach ($_POST as $key => $value) $pairs[$key] = $value;
 
 		return $pairs;
+	}
+
+	public function redirect($url) {
+		http_response_code(301);
+		header('Location: ' . $url);
 	}
 }

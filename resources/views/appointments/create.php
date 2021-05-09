@@ -38,7 +38,8 @@
 <?php } ?>
 
 <form method="get" action="<?= url('admin/appointments') ?>" class="form">
-    <input type="hidden" name="method" value="POST" />
+    <input type="hidden" name="_method" value="POST" />
+    <input type="hidden" name="mode" value="<?= $mode ?>" />
     <input type="hidden" name="slotsToChoose" value="<?= $slotsToChoose ?>" />
     <?php for ($i = 0; $i < $slotsToChoose; ++$i) { ?>
         <div class="form_row">

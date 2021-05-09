@@ -1,4 +1,7 @@
 <h2>&Uuml;bersicht</h2>
+
+@include('appointments.partials.calendar')
+<hr>
 <table>
 	<thead>
 		<tr>
@@ -6,6 +9,7 @@
 			<th>Uhrzeit</th>
 			<th>Interviewer</th>
 			<th>Teilnehmer</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -18,6 +22,7 @@
 			<td><?= date("H:i", data_get($appointment, 'from')) ?> bis <?= date("H:i", data_get($appointment, 'from') + 7200) ?></td>
 			<td><?= data_get($appointment, 'name') ?></td>
 			<td><?= data_get($appointment, 'number') ?></td>
+			<td><a href="<?= url('admin/appointments', ['_method' => 'delete', 'from' => data_get($appointment, 'from'), 'i_id' => data_get($appointment, 'interviewer_id')]) ?>" title="Löschen">X</a></td>
 		</tr>
 		<?php } ?>
 	</tbody>
@@ -32,9 +37,8 @@
             <td></td>
             <td></td>
             <td><?= data_get($attendants, 'number') ?></td>
+            <td><a href="<?= url('admin/appointments', ['_method' => 'delete', 'from' => data_get($appointment, 'from'), 'i_id' => data_get($appointment, 'interviewer_id')]) ?>" title="Löschen">X</a></td>
         </tr>
 	<?php } ?>
     </tbody>
 </table>
-<hr>
-@include('appointments.partials.calendar')

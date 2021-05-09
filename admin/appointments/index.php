@@ -31,6 +31,10 @@ class RequestHandler extends BaseRequestHandler {
 					echo AppointmentController::instance()->store($this);
 				}
 				break;
+			case 'DELETE':
+				http_response_code(200);
+				echo AppointmentController::instance()->delete($this);
+				break;
 			default:
 				http_response_code(405);
 				echo $this->method . ' unkown';

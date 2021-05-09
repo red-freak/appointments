@@ -24,6 +24,11 @@ body {
   margin: 12px;
   border: 1px #CCCCCC solid;
   border-radius: 6px; }
+  .alert-box {
+    width: 95%;
+    max-width: 400px;
+    margin: auto;
+    font-weight: 500; }
   .alert-error {
     background-color: #ffd5d5; }
   .alert-warn {
@@ -121,8 +126,10 @@ footer {
     .c-calendar .is-column:first-child {
       border-left: 1px #000000 solid; }
     .c-calendar .is-column .is-item {
+      position: relative;
+      border-collapse: collapse;
       min-height: 15px;
-      border: 1px #ababab26 solid; }
+      border: 1px #d9d9d9 solid; }
     .c-calendar .is-column .is-slot {
       background-color: #ebffd5; }
     .c-calendar .is-column .is-booked {
@@ -139,6 +146,11 @@ footer {
       flex-direction: row; }
     .c-calendar-selector__item {
       padding: 3px; }
+  .c-calendar .appointment-control {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 71%; }
 
 * {
   box-sizing: border-box;

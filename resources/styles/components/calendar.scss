@@ -18,8 +18,10 @@
     border-bottom: 1px #000000 solid;
 
     .is-item {
+      position: relative;
+      border-collapse: collapse;
       min-height: 15px;
-      border: 1px #ababab26 solid;
+      border: 1px rgb(217, 217, 217) solid;
     }
 
     .is-slot {
@@ -49,5 +51,12 @@
     &__item {
       padding: $space_quarter;
     }
+  }
+
+  & .appointment-control {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 71%;
   }
 }

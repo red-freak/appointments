@@ -4,25 +4,25 @@
     <div class="c-calendar-selector__group">
         <div class="c-calendar-selector__item">
             <a href="<?= url('admin/appointments', ['mode' => $mode, 'from' => $from - 604800 * 2, 'grid' => 'w']) ?>">
-                KW <?= date('W', $from - 604800 * 2); ?>
+                KW <?= date('W', $from - 604800 * 2); ?> (<?= date('d.m', $from - 604800 * 2); ?>)
             </a>
         </div>
         <div class="c-calendar-selector__item">
             <a href="<?= url('admin/appointments', ['mode' => $mode, 'from' => $from - 604800, 'grid' => 'w']) ?>">
-                KW <?= date('W', $from - 604800); ?>
+                KW <?= date('W', $from - 604800); ?> (<?= date('d.m', $from - 604800); ?>)
             </a>
         </div>
         <div class="c-calendar-selector__item">
-            KW <?= date('W', $from); ?>
+            KW <?= date('W', $from); ?> (<?= date('d.m', $from); ?>)
         </div>
         <div class="c-calendar-selector__item">
             <a href="<?= url('admin/appointments', ['mode' => $mode, 'from' => $from + 604800, 'grid' => 'w']) ?>">
-                KW <?= date('W', $from + 604800); ?>
+                KW <?= date('W', $from + 604800); ?> (<?= date('d.m', $from + 604800); ?>)
             </a>
         </div>
         <div class="c-calendar-selector__item">
             <a href="<?= url('admin/appointments', ['mode' => $mode, 'from' => $from + 604800 * 2, 'grid' => 'w']) ?>">
-                KW <?= date('W', $from + 604800 * 2); ?>
+                KW <?= date('W', $from + 604800 * 2); ?> (<?= date('d.m', $from + 604800 * 2); ?>)
             </a>
         </div>
     </div>
@@ -50,7 +50,7 @@
         <tr>
             <th></th>
             <?php for($j = 0; $j < 7; ++$j) { ?>
-                <th><?= $days[$j] ?></th>
+                <th><?= $days[$j] ?> (<?= date('d.m', $from + 86400 * $j); ?>)</th>
             <?php } ?>
         </tr>
     </thead>
@@ -64,6 +64,10 @@
 		                $attendant_number = data_get($appointment, 'number');
 		                $interviewer_name = data_get($appointment, 'name');
 		                $appointmentStr = trim($attendant_number ? $attendant_number . ' (' . $interviewer_name . ')' : $interviewer_name);
+		                if (!empty($appointmentStr)) $appointmentStr = '<div class="appointment-control"><a href="'
+                                                                       . url('admin/appointments', ['_method' => 'delete', 'from' => data_get($appointment, 'from'), 'i_id' => data_get($appointment, 'interviewer_id')])
+                                                                       . '" title="Löschen">X</a></div>'
+                                                                       . $appointmentStr;
 
 		                if (!empty($appointmentStr)) $ignoreTd[$j] = 8;
 

@@ -51,16 +51,24 @@ class AppointmentController {
 	}
 
 	public function create(RequestHandler $request, $errors = []) {
+		$from = $request->get('from', mktime(0, 0, 0, date("n"), date("j") - date("N") + 1));
 		$slotsToChoose = $request->get('slotsToChoose', 5);
 		if($request->get('submit') === '+') $slotsToChoose += 5;
 
+		$appointments_tmp = $this->appointments($request);
+		$appointments = [];
+		foreach ($appointments_tmp as $appointment) {
+			$appointments[$appointment['from']] = $appointment;
+		}
+
 		return $request->view('appointments.create')
 		               ->with('slotsAvailable', $this->getFreeAppointments($request))
-		               ->with('appointments', $this->appointments($request))
+		               ->with('appointments', $appointments)
 		               ->with('attendantsNoSlot', $this->attendantsNoSlot($request))
 		               ->with('slots', $request->get('slots'))
 		               ->with('slotsToChoose', $slotsToChoose)
 		               ->with('errors', $errors)
+					   ->with('from', $from)
 		               ->render();
 	}
 
@@ -91,16 +99,61 @@ class AppointmentController {
 			$statement->execute();
 		}
 
+		$appointments_tmp = $this->appointments($request);
+		$appointments = [];
+		foreach ($appointments_tmp as $appointment) {
+			$appointments[$appointment['from']] = $appointment;
+		}
+
 		// Rückgabe
 		$slotsToChoose = $request->get('slotsToChoose', 5);
 		if($request->get('submit') === '+') $slotsToChoose += 5;
 
 		return $request->view('appointments.create')
 		               ->with('slotsAvailable', $this->getFreeAppointments($request))
-		               ->with('appointments', $this->appointments($request))
+		               ->with('appointments', $appointments)
 		               ->with('attendantsNoSlot', $this->attendantsNoSlot($request))
 		               ->with('slotsToChoose', $slotsToChoose)
 		               ->with('success', true)
+			           ->with('from', $request->get('from', mktime(0, 0, 0, date("n"), date("j") - date("N") + 1)))
+		               ->render();
+	}
+
+	public function delete(RequestHandler $request) {
+		if (!$request->get('confirmed'))
+			return $this->requestDelete($request);
+
+		$from = $request->get('from');
+		$i_id = $request->get('i_id');
+		// Füge den Datensatz ein
+		$query = 'DELETE
+		           FROM `appointments`
+				   WHERE `appointments`.`from` = :from AND `appointments`.`interviewer_id` = :i_id;';
+		$statement = $request->db()->db()->prepare($query);
+		$statement->bindParam(':from', $from);
+		$statement->bindParam(':i_id', $i_id);
+		$statement->execute();
+
+		$request->redirect(url('admin/appointments', ['mode' => 'o']));
+	}
+
+	public function requestDelete(RequestHandler $request) {
+		$from = $request->get('from');
+		$i_id = $request->get('i_id');
+		// Füge den Datensatz ein
+		$query = 'SELECT *
+		           FROM `appointments`
+				       LEFT JOIN `attendents` on attendents.id = appointments.attendent_id
+				       LEFT JOIN `interviewers` on appointments.interviewer_id = interviewers.id
+				   WHERE `appointments`.`from` = :from AND `appointments`.`interviewer_id` = :i_id;';
+		$statement = $request->db()->db()->prepare($query);
+		$statement->bindParam(':from', $from);
+		$statement->bindParam(':i_id', $i_id);
+		$result = $statement->execute();
+		$appointment = $result->fetchArray();
+
+		return $request->view('appointments.delete')
+		               ->with('appointment', $appointment)
 		               ->render();
 	}
 

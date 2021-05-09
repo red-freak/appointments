@@ -1,8 +1,8 @@
 <nav>
 	<strong>Termine</strong>
 	<ul>
-        <li><a href="<?= url('admin/appointments?mode=o') ?>">&Uuml;bersicht</a></li>
-        <li><a href="<?= url('admin/appointments') ?>">verwalten</a></li>
+        <li><a href="<?= url('admin/appointments', ['mode' => 'o']) ?>">&Uuml;bersicht</a></li>
+        <li><a href="<?= url('admin/appointments', ['mode' => 'c']) ?>">verwalten</a></li>
 	</ul>
 
 	<strong>Interviewer</strong>

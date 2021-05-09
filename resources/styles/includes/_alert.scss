@@ -6,6 +6,13 @@
   border: 1px #CCCCCC solid;
   border-radius: $space_half;
 
+  &-box {
+    width: 95%;
+    max-width: 400px;
+    margin: auto;
+    font-weight: 500;
+  }
+
   &-error {
     background-color: #ffd5d5;
   }
